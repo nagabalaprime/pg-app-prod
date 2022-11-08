@@ -1,0 +1,30 @@
+.contact-form {
+
+
+  .form-submit {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    .submit-btn {
+      border: 1px solid darkgray;
+      color: white;
+      padding: 10px 20px;
+      background: cornflowerblue;
+      border-radius: 5px;
+      text-align: center
+    }
+  }
+
+  display: grid;
+  grid-gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+
+  .contact-field {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+  }
+
+}

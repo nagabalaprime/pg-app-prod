@@ -1,0 +1,30 @@
+.view-user-page {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .view-section {
+        border: 1px solid black;
+        padding: 20px;
+    }
+
+    .view-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        font-weight: 200;
+   
+    }
+    
+    .grid-field{
+        margin-bottom: 20px;
+        .field-label{
+            font-weight: bold;
+        }
+        .field-value {
+            font-weight: normal;
+        }
+    }
+}
+
+
