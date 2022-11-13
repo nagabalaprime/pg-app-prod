@@ -38,19 +38,19 @@ export const UserContact = {
     addressProof: string;
     durationOfStay: number;
     proffessionalName: string;
-    dateOfVacate: string;
+    dateOfVacate: Date;
   }
 
   export const intialState: IUserContact = {
     name: "",
     stayerAddress: "",
     mobile: 0,
-    dateOfArrival: new Date(),
+    dateOfArrival: null as any,
     comingForm: "",
     proffessionalAddress: "",
     proffessionalName: "",
     visitPurpose: "student",
     addressProof: "",
     durationOfStay: 0,
-    dateOfVacate: ""
+    dateOfVacate: null as any
   };

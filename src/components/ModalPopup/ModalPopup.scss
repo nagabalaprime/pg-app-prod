@@ -25,6 +25,12 @@
 
     .modal-body {
       padding: 20px;
+      display:flex;
+      flex-direction: column;
+      button{
+        width:150px;
+        margin:0 auto;
+      }
     }
 
     .modal-title {

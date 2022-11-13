@@ -37,11 +37,14 @@ const ContactFormPage = () => {
 
   const onAgree = async () => {
     setLoader(true);
+    setShowModal(false);
     try {
       const uploadedImageURL = await uploadImage();
+      const newDate = moment(contactDetails.dateOfArrival, "DD-MM-YYYY");
       const appendContactData = {
         ...contactDetails,
-        [UserContact.addressProof]: uploadedImageURL
+        [UserContact.addressProof]: uploadedImageURL,
+        [UserContact.dateOfArrival]: newDate + ""
       };
       await db
         .collection(DBCollection.UserInfo)

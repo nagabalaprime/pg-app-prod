@@ -1,5 +1,10 @@
 .contact-form {
-
+  display: grid;
+  grid-gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 20px;
 
   .form-submit {
     justify-content: center;
@@ -12,19 +17,21 @@
       padding: 10px 20px;
       background: cornflowerblue;
       border-radius: 5px;
-      text-align: center
+      text-align: center;
     }
   }
-
-  display: grid;
-  grid-gap: 20px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
 
   .contact-field {
     display: grid;
     grid-template-columns: 0.5fr 1fr;
+    align-items: center;
+
+    .error-text-color {
+      color: red;
+      text-align: "left";
+      grid-column-end: 3;
+    }
   }
 
+  
 }

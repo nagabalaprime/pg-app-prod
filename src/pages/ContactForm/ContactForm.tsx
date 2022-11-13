@@ -1,10 +1,7 @@
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./ContactFormStyle.scss";
-import { db, storage } from "../../firebaseConfig";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { useNavigate } from "react-router-dom";
-import { intialState, IUserContact, UserContact } from "../../types/fieldNames";
+import { intialState, UserContact } from "../../types/fieldNames";
 import * as yup from "yup";
 
 interface IProps {
@@ -24,8 +21,10 @@ const ContactForm = ({ updateContact }: IProps) => {
       .min(10, "Phone number is not valid")
       .max(10, "Phone number is not valid"),
     addressProof: yup.string().required("address proof is required"),
-    dateOfArrival: yup.string().required("arrival date is required"),
-    durationOfStay: yup.number().required("duration of stay is required")
+    dateOfArrival: yup.date().required("arrival date is required"),
+    durationOfStay: yup
+      .number()
+      .min(1, "validate date of arrival and date of vacate")
   });
 
   const [contactDetails, setContactDetails] = useState(intialState);
@@ -50,7 +49,6 @@ const ContactForm = ({ updateContact }: IProps) => {
     userInfoValidator
       .validate(contactDetails, { abortEarly: false })
       .then(async (responseData) => {
-        // setShowModal(true);
         updateContact(contactDetails);
       })
       .catch((err) => {
@@ -87,7 +85,7 @@ const ContactForm = ({ updateContact }: IProps) => {
   const requiredField = () => <span style={{ color: "red" }}> *</span>;
 
   const renderErrorTag = (errorFromValue: string) => (
-    <div style={{ color: "red", textAlign: "center" }}>{errorFromValue}</div>
+    <div className="error-text-color">{errorFromValue}</div>
   );
 
   const onChangeVacate = (event: any) => {
@@ -100,6 +98,7 @@ const ContactForm = ({ updateContact }: IProps) => {
       }
     }
   };
+
   return (
     <div>
       <form
@@ -116,8 +115,9 @@ const ContactForm = ({ updateContact }: IProps) => {
             name={UserContact.name}
             id={UserContact.name}
           />
+          {renderErrorTag(formErrors?.name)}
         </div>
-        {renderErrorTag(formErrors?.name)}
+
         <div className="contact-field ">
           <label>Premenant Address {requiredField()}</label>
           <textarea
@@ -128,8 +128,9 @@ const ContactForm = ({ updateContact }: IProps) => {
             cols={50}
             onChange={onChangeText}
           />
+          {renderErrorTag(formErrors?.stayerAddress)}
         </div>
-        {renderErrorTag(formErrors?.stayerAddress)}
+
         <div className="contact-field">
           <label>Address Proof {requiredField()}</label>
           <input
@@ -138,8 +139,9 @@ const ContactForm = ({ updateContact }: IProps) => {
             onChange={onChangeFile}
             id={UserContact.addressProof}
           />
+          {renderErrorTag(formErrors?.addressProof)}
         </div>
-        {renderErrorTag(formErrors?.addressProof)}
+
         <div className="contact-field">
           <label>Mobile {requiredField()}</label>
           <input
@@ -150,8 +152,8 @@ const ContactForm = ({ updateContact }: IProps) => {
             minLength={10}
             maxLength={10}
           />
+          {renderErrorTag(formErrors?.mobile)}
         </div>
-        {renderErrorTag(formErrors?.mobile)}
 
         <div className="contact-field">
           <label>Coming From</label>
@@ -204,6 +206,7 @@ const ContactForm = ({ updateContact }: IProps) => {
             onChange={onChangeText}
           />
         </div>
+
         <div className="contact-field">
           <label>Date of Arrival</label>
           <input
@@ -212,8 +215,8 @@ const ContactForm = ({ updateContact }: IProps) => {
             id={UserContact.dateOfArrival}
             onChange={onChangeDate}
           />
+          {renderErrorTag(formErrors?.dateOfArrival)}
         </div>
-        {renderErrorTag(formErrors?.dateOfArrival)}
 
         <div className="contact-field">
           <label>Date of Vacate</label>
@@ -222,15 +225,18 @@ const ContactForm = ({ updateContact }: IProps) => {
             name={UserContact.dateOfVacate}
             onChange={onChangeDate}
             onBlur={(event) => onChangeVacate(event)}
+            onMouseLeave={(event) => onChangeVacate(event)}
           />
         </div>
+
         <div className="contact-field">
           <label>Duration Of Stay</label>
-          <span>{contactDetails.durationOfStay}</span>
+          <input type="text" value={contactDetails.durationOfStay} disabled />
+          {renderErrorTag(formErrors?.durationOfStay)}
         </div>
 
         <div className="form-submit">
-          <button className="submit-btn"> submit</button>
+          <button className="submit-btn">Submit</button>
         </div>
       </form>
     </div>
