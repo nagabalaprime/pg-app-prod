@@ -1,6 +1,6 @@
 export const DBCollection = {
     RoomInfo: 'roomInfo',
-    UserInfo: 'userData',
+    UserInfo: 'entryUserInfo',
     PaymentInfo: 'paymentInfo',
     VacateUserInfo: 'vacateUserInfo'
 }

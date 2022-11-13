@@ -8,6 +8,7 @@ export const UserContact = {
     visitPurpose: 'visitPurpose',
     addressProof: 'addressProof',
     durationOfStay: 'durationOfStay',
+    dateOfVacate:'dateOfVacate',
     proffessionalName: 'proffessionalName'
   }
 
@@ -24,3 +25,32 @@ export const UserContact = {
     unitStart: 'unitStart' ,
     unitEnd: 'unitEnd' 
   }
+
+  
+  export interface IUserContact {
+    name: string;
+    stayerAddress: string;
+    mobile: number;
+    dateOfArrival: Date;
+    comingForm: string;
+    proffessionalAddress: string;
+    visitPurpose: string;
+    addressProof: string;
+    durationOfStay: number;
+    proffessionalName: string;
+    dateOfVacate: string;
+  }
+
+  export const intialState: IUserContact = {
+    name: "",
+    stayerAddress: "",
+    mobile: 0,
+    dateOfArrival: new Date(),
+    comingForm: "",
+    proffessionalAddress: "",
+    proffessionalName: "",
+    visitPurpose: "student",
+    addressProof: "",
+    durationOfStay: 0,
+    dateOfVacate: ""
+  };

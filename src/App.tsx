@@ -31,9 +31,6 @@ function App() {
                 <Route path="/contactEntry" element={<ContactFormPage />} />
               </Route>
             </Route>
-            {/* <Route element={<RequireAuth allowedRoles={['admin']} />}>
-            <Route path="/contact" element={<ContactDetailsPage />} />
-          </Route> */}
             <Route path="/entry" element={<ContactFormPage />} />
             <Route path="/login" element={<LoginPage />} />
           </Routes>
