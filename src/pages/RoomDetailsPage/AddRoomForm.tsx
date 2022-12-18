@@ -4,29 +4,48 @@ import { db } from '../../firebaseConfig';
 import { DBCollection } from '../../types/dbCollection';
 import { fetchDataList } from '../../utils/fetchData';
 
+interface IBedInfo {
+  bedNo: string;
+  status: string;
+  userID : string;
+}
+interface IAddRoom {
+  roomType: string;
+  roomNo: string;
+  status: string;
+  sharing: number;
+  floorNo: number;
+  bedDetails:Array<IBedInfo>;
+}
+
 const AddRoomForm = ({onClose} : any) => {
 
   const AddRoom = {
     roomType: 'roomType',
+    floorNo: 'floorNo',
     roomNo: 'roomNo',
-    status: 'status',
     sharing: 'sharing',
-    roomID: 'roomID'
+    roomID: 'roomID',
+    bedDetails: {
+      bedNo: 'bedNo',
+      status: 'status',
+      userID : 'userID'
+    }
   }
 
   const intialState: IAddRoom = {
+    floorNo: 0,
     roomType: '',
-    roomNo: 100,
+    roomNo: '01',
     status:'vacant',
-    sharing: 1
+    sharing: 1,
+    bedDetails:[{
+      bedNo: '010',
+      userID: '', 
+      status: 'vacant'
+    }]
   }
 
-  interface IAddRoom {
-    roomType: string;
-    roomNo: number;
-    status: string;
-    sharing: number;
-  }
   
 
   const [roomInfo, setRoomInfo] = useState(intialState);
@@ -43,20 +62,43 @@ const AddRoomForm = ({onClose} : any) => {
      setRoomInfoList([...roomDataList]);
   }
 
+  const getBedDetails = ()=>{
+    const bedDetails= [];
+  
+    if(roomInfo.sharing >0){
+      const bedDetail = {
+        bedNo: '',
+        userID : '',
+        status: 'vacant'
+      }
+      for(let i=0;i< Number(roomInfo.sharing) ; i++){
+        bedDetail.bedNo = roomInfo.floorNo + roomInfo.roomNo + i +'';
+        bedDetails.push(bedDetail);
+      }
+    }
+    return bedDetails;
+  }
+
+  const checkIfRoomExists = ()=>{
+   return roomInfoList.find((roomObj:any) =>{
+      return roomObj.roomNo === roomInfo.roomNo
+    })
+  }
+
   const postFormData = async (event: any) => {
     try{
         event?.preventDefault();
         setLoader(true);
-
-        //@ts-ignore
-        const existingRoom = roomInfoList.find(roomValue => roomValue?.roomNo === roomInfo?.roomNo)
-        if(!existingRoom){
-            await db.collection(DBCollection.RoomInfo).add({ ...roomInfo });
+        if(!checkIfRoomExists()){
+          const updatedRoomInfo = {...roomInfo}; 
+          updatedRoomInfo.bedDetails = getBedDetails();
+          await db.collection(DBCollection.RoomInfo).add({ ...roomInfo });
+        } else {
+         alert('room already exists');
         }
-       
-    }catch(expection){
+    } catch(expection){
         alert('error occured');
-    }finally{
+    } finally{
         setLoader(false);
         onClose();
     }
@@ -77,10 +119,24 @@ const AddRoomForm = ({onClose} : any) => {
             postFormData(event)
           }}
         >
+
+          <div className='input-field'>
+            <label>Floor</label>
+            <select
+              name={AddRoom.floorNo}
+              onChange={onChangeText}
+              defaultValue={''}>   
+                <option value='' disabled>{'Select Floor'}</option>
+                <option value="0">Ground Floor</option>
+                <option value="1">First Floor</option>
+                <option value="2">Second Floor</option>
+              </select>
+          </div>
+
           <div className='input-field'>
             <label>Room No</label>
             <input
-              type='number'
+              type='text'
               onChange={onChangeText}
               name={AddRoom.roomNo}
               maxLength={3}
@@ -98,6 +154,7 @@ const AddRoomForm = ({onClose} : any) => {
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
+                <option value="4">4</option>
               </select>
           </div>
 
@@ -119,8 +176,8 @@ const AddRoomForm = ({onClose} : any) => {
             <button className='submit-btn'>submit</button>
           </div>
         </form>
-      )}
-    </div>
+         )}
+         </div>
   )
 }
 

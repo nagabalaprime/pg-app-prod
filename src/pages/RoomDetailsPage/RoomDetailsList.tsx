@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTable } from 'react-table';
 
 const RoomDetailsList = ({roomList  } : any) => {
@@ -8,9 +7,7 @@ const RoomDetailsList = ({roomList  } : any) => {
     () => roomList,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
-  )
-
-  const navigate = useNavigate();
+  );
 
   const columns = React.useMemo(
     () => [
@@ -38,10 +35,9 @@ const RoomDetailsList = ({roomList  } : any) => {
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
-  )
+  );
 
   const initialState = { hiddenColumns: ['roomID'] };
-
 
   const {
     getTableProps,

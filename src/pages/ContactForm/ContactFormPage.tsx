@@ -67,7 +67,7 @@ const ContactFormPage = () => {
       show={showModal}
     >
       {ConditionsModalContent()}
-      <button onClick={onAgree}>agree</button>
+      <button onClick={onAgree}>Agree</button>
     </ModalPopup>
   );
 

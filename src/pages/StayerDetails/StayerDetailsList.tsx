@@ -82,8 +82,7 @@ const StayerDetailsList = ({userDataList  , vacateUser} : any) => {
   )
 
   const initialState = { hiddenColumns: ['userID'] };
-
-
+  
   const {
     getTableProps,
     getTableBodyProps,

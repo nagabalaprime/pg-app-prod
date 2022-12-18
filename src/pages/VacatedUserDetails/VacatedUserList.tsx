@@ -77,8 +77,7 @@ const VacatedUserList = ({userDataList  } : any) => {
   )
 
   const initialState = { hiddenColumns: ['vacatedUserID'] };
-
-
+  
   const {
     getTableProps,
     getTableBodyProps,

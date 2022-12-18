@@ -1,13 +1,14 @@
 import moment from "moment";
 import React, { useState } from "react";
 import "./ContactFormStyle.scss";
-import { intialState, UserContact } from "../../types/fieldNames";
+import { intialState, IUserContact, UserContact } from "../../types/fieldNames";
 import * as yup from "yup";
 
 interface IProps {
   updateContact: any;
+  userContact?: IUserContact
 }
-const ContactForm = ({ updateContact }: IProps) => {
+const ContactForm = ({ updateContact , userContact = intialState }: IProps) => {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -21,13 +22,13 @@ const ContactForm = ({ updateContact }: IProps) => {
       .min(10, "Phone number is not valid")
       .max(10, "Phone number is not valid"),
     addressProof: yup.string().required("address proof is required"),
-    dateOfArrival: yup.date().required("arrival date is required"),
+    dateOfArrival: yup.string().required("arrival date is required"),
     durationOfStay: yup
       .number()
       .min(1, "validate date of arrival and date of vacate")
   });
 
-  const [contactDetails, setContactDetails] = useState(intialState);
+  const [contactDetails, setContactDetails] = useState(userContact);
 
   const initialError = {
     name: "",

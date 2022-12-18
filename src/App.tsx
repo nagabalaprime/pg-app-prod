@@ -22,7 +22,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={["admin"]} />}>
               <Route path="/" element={<AdminPage />}>
                 <Route path="/" element={<ContactDetailsPage />} />
-                <Route path="/contact" element={<ContactDetailsPage />} />
+                <Route path="/enquiry" element={<ContactDetailsPage />} />
                 <Route path="/stayer" element={<StayerDetailsPage />} />
                 <Route path="/vacated" element={<VacatedUserPage />} />
                 <Route path="/viewUser" element={<ViewUserInfoPage />} />
